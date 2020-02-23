@@ -1,3 +1,9 @@
+## Running the app
+Run `yarn start` in the root directory to start the frontend.
+
+Run `yarn start` in `server/` to start the GraphQL server.
+
+---
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
