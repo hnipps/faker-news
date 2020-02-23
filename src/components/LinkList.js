@@ -3,6 +3,33 @@ import Link from "./Link";
 import { gql } from "apollo-boost";
 import { Query } from "react-apollo";
 
+const NEW_VOTES_SUBSCRIPTION = gql`
+  subscription {
+    newVote {
+      id
+      link {
+        id
+        url
+        description
+        createdAt
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
+      }
+      user {
+        id
+      }
+    }
+  }
+`;
+
 const NEW_LINKS_SUBSCRIPTION = gql`
   subscription {
     newLink {
@@ -56,6 +83,7 @@ class LinkList extends Component {
           if (error) return <div>Error</div>;
 
           this._subscribeToNewLinks(subscribeToMore);
+          this._subscribeToNewVotes(subscribeToMore);
 
           const linksToRender = data.feed.links;
 
@@ -102,6 +130,12 @@ class LinkList extends Component {
           }
         });
       }
+    });
+  };
+
+  _subscribeToNewVotes = subscribeToMore => {
+    subscribeToMore({
+      document: NEW_VOTES_SUBSCRIPTION
     });
   };
 }
